@@ -1,0 +1,201 @@
+.userInfoModal {
+    padding: auto;
+    position: fixed;
+    display: none;
+    /* overflow-y: auto; */
+
+    background-color: rgba(0, 0, 0, 0.315);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 40px 0;
+    min-height: 100vh;
+}
+
+.userInfoModal .infoBody {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 54px 34px 40px;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.closeBtn * {
+    width: 26px;
+    height: 26px;
+    color: #d0d5dd;
+}
+.userInfoModal .infoBody .infoContent {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+}
+
+.userInfoModal .infoBody .infoContent .col_1 {
+    width: 100%;
+    max-width: 260px;
+    padding-top: 43px;
+    position: relative;
+    padding: 43px 20px 65px;
+}
+
+.userInfoModal .infoBody .infoContent .col_2 {
+    width: 100%;
+    padding-top: 31px !important;
+    position: relative;
+    padding: 43px 20px 65px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    background-color: #d9d9d9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 54px;
+    font-weight: 800;
+}
+.userInfoModal .infoBody .infoContent .col_1 .subCol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.userInfoModal .infoBody .infoContent .col_2 .subCol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pt_29 {
+    padding-top: 29px;
+}
+.pt_14 {
+    padding-top: 14px;
+}
+.pt_16 {
+    padding-top: 10px;
+}
+.infoTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #344054;
+    width: 200px;
+}
+
+.infoResult {
+    font-size: 14px;
+    font-weight: 600;
+    color: #667085;
+    width: 140px;
+    line-height: 14px;
+}
+
+.userInfoModal .infoBody .infoContent .col_1 button {
+    background-color: #34a853;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 16px;
+    width: 205px;
+    height: 48px;
+    border: none;
+    cursor: pointer;
+    background: #34a853;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    color: #fff;
+    margin-top: 37px;
+}
+
+.userInfoModal .infoBody .infoContent .col_2 button {
+    margin-top: 16px;
+    width: 184px;
+    height: 48px;
+    left: 0px;
+    top: 238px;
+    border: none;
+    background: #344054;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 6.25px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    cursor: pointer;
+}
+.userInfoModal .infoBody .infoContent .col_1 button span {
+    background-color: #fff;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.userInfoModal .infoBody .infoContent .col_2 button span {
+    display: block;
+    margin-right: 8px;
+}
+
+.userInfoModal .infoBody .infoContent .col_1 button span .icon {
+    font-size: 20px;
+}
+
+.userInfoModal .infoBody .infoContent .col_2 button span .icon {
+    font-size: 30px;
+}
+
+.userInfoModal .infoBody .infoContent .col_2 button span .icon {
+    font-size: 20px;
+}
+
+.show {
+    display: block;
+}
+
+/* *****  MOBILE STYLES ****** */
+
+@media screen and (max-width: 630px) {
+    .userInfoModal {
+        /* margin-top:300px ;     */
+        overflow-y: scroll;
+    }
+
+    .userInfoModal .infoBody {
+        padding: 54px 14px 40px;
+        max-width: 480px;
+    }
+    .userInfoModal .infoBody .infoContent {
+        flex-direction: column;
+    }
+    .userInfoModal .infoBody .infoContent .col_1 {
+        max-width: 100%;
+    }
+}
