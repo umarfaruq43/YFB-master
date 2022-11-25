@@ -19,6 +19,7 @@ const PaginationTable = ({}) => {
     const { data: userData, dataLoading } = dbContext();
     //     state to toggle user info  modal
     const [showUserInfo, setShowUserInfo] = useState(false);
+
     //  function to togggle the user info modal
 
     const handleShowUserInfo = () => {
@@ -39,7 +40,7 @@ const PaginationTable = ({}) => {
         usePagination
     );
 
-    const { user, deleteUser } = useDelete();
+    const { user, getUserInfo, deleteUser } = useDelete();
 
     const deleteRow = (id) => {
         if (id === "Del") {
@@ -137,9 +138,10 @@ const PaginationTable = ({}) => {
                                                                 .Header ===
                                                             "Info"
                                                         ) {
-                                                            handleShowUserInfo(
+                                                            handleShowUserInfo();
+                                                            getUserInfo(
                                                                 cell.row
-                                                                    .original.id
+                                                                    .original
                                                             );
                                                         }
                                                     }}
