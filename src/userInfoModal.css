@@ -47,6 +47,7 @@
     display: flex;
     /* align-items: center; */
     justify-content: space-between;
+    width: 100%;
 }
 
 .userInfoModal .infoBody .infoContent .col_1 {

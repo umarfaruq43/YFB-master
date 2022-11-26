@@ -117,7 +117,9 @@ export default function ContextProvider({ children }) {
     };
 
     //   ***************  get user info  **********************
+    const [salaryDetails, setSalaryDetails] = useState([]);
     const getUserInfo = (info) => {
+        setLoading(true);
         var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
         var apiToken =
             "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
@@ -133,11 +135,11 @@ export default function ContextProvider({ children }) {
         raw.lastName = info.lastName;
         raw.middleName = info.middleName;
         raw.accountNumber = info.accountNumber;
-        raw.bankCode = `${info.bank && info.bank}`;
+        raw.bankCode = `0${info.bank && info.bank}`;
         raw.bvn = info.BVN;
         raw.authorisationChannel = "USSD";
 
-        console.log(info);
+        // console.log(info);
         console.log(raw);
 
         let Headers = {
@@ -156,7 +158,12 @@ export default function ContextProvider({ children }) {
             Headers
         )
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+                setSalaryDetails(data);
+                setLoading(false);
+                console.log(data);
+            });
+        //     console.log(Headers);
     };
 
     // Generate access token
@@ -198,6 +205,7 @@ export default function ContextProvider({ children }) {
 
     const value = {
         db,
+        salaryDetails,
         getUserInfo,
         data,
         dataLoading,
@@ -234,5 +242,12 @@ export const useToken = () => {
 };
 
 export const useDelete = () => {
+    return useContext(Context);
+};
+export const useLoading = () => {
+    return useContext(Context);
+};
+
+export const useSalaryDetails = () => {
     return useContext(Context);
 };
