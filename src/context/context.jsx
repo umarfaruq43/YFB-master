@@ -130,7 +130,7 @@ export default function ContextProvider({ children }) {
         let rand = Math.floor(Math.random() * 1000);
         const raw = {};
         // Adding the object needed for  headed data
-        raw.authorisationCode = `YCT-MFB-AC-TEST-${rand}`;
+        raw.authorisationCode = `YCT-MFB-AC-TEST-${info.BVN + rand}`;
         raw.firstName = info.firstName;
         raw.lastName = info.lastName;
         raw.middleName = info.middleName;
