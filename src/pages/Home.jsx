@@ -9,6 +9,7 @@ import Skeleton from "../components/Skeleton";
 import UserFormInput from "../components/UserFormInput";
 import { Error } from "@mui/icons-material";
 import { bank_codes } from "../bankCodes";
+import TermsAndConditionModal from "../components/TermsAndConditionModal";
 
 const Home = () => {
   const [values, setValues] = useState({
@@ -17,16 +18,11 @@ const Home = () => {
     middleName: "",
     telephone: "",
     email: "",
-    authCode: "",
     accountNumber: "",
-    bankCode: "",
     BVN: "",
-    AuthChannel: "",
     terms: false,
   });
   const [optionSelect, setOptionSelect] = useState(false);
-
-  console.log(optionSelect);
 
   const inputs = [
     {
@@ -37,7 +33,7 @@ const Home = () => {
       errorMessage: "First name should be 3 or more characters.",
       name: "firstName",
       required: true,
-      pattern: "[a-zA-Z]{3,}",
+      pattern: "[a-zA-Z]{1,}",
     },
 
     {
@@ -48,7 +44,7 @@ const Home = () => {
       errorMessage: "Last name should be 3 or more characters.",
       name: "lastName",
       required: true,
-      pattern: "[a-zA-Z]{3,}",
+      pattern: "[a-zA-Z]{1,}",
     },
 
     {
@@ -59,7 +55,7 @@ const Home = () => {
       errorMessage: "Middle name should be 3 or more char.",
       name: "middleName",
       required: true,
-      pattern: "[a-zA-Z]{3,}",
+      pattern: "[a-zA-Z]{1,}",
     },
 
     {
@@ -84,17 +80,6 @@ const Home = () => {
       pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
     },
 
-    // {
-    //   id: "authCode",
-    //   label: "Auth Code",
-    //   type: "text",
-    //   placeholder: "Enter your auth code",
-    //   errorMessage: "auth code should be 6 digits",
-    //   name: "authCode",
-    //   required: true,
-    //   pattern: "[0-9]{6}",
-    // },
-
     {
       id: "accountNumber",
       label: "Account Number",
@@ -105,17 +90,6 @@ const Home = () => {
       required: true,
       pattern: "[0-9]{10}",
     },
-
-    // {
-    //   id: "bankCode",
-    //   label: "Bank Code",
-    //   type: "text",
-    //   placeholder: "Enter your bank code",
-    //   errorMessage: "bank code should be 3 digits",
-    //   name: "bankCode",
-    //   required: true,
-    //   pattern: "[0-9]{3}",
-    // },
 
     {
       id: "BVN",
@@ -128,16 +102,27 @@ const Home = () => {
       pattern: "[0-9]{11}",
     },
 
-    // {
-    //   id: "AuthChannel",
-    //   label: "Auth Channel",
-    //   type: "text",
-    //   placeholder: "Enter your auth channel",
-    //   errorMessage: "auth channel should be 1 digit",
-    //   name: "AuthChannel",
-    //   required: true,
-    //   pattern: "[0-9]{1}",
-    // },
+    {
+      id: "loanAmount",
+      label: "Loan Amount",
+      type: "text",
+      placeholder: "Enter your loan amount",
+      errorMessage: "loan amount should be 4 digits or more",
+      name: "LoanAmount",
+      required: true,
+      pattern: "[0-9]{4,}",
+    },
+
+    {
+      id: "loanTenure",
+      label: "Loan Tenure",
+      type: "text",
+      placeholder: "Enter your loan tenure",
+      errorMessage: "loan tenure should be 1 digits or more",
+      name: "LoanTenure",
+      required: true,
+      pattern: "[0-9]{1,}",
+    },
 
     {
       id: "terms",
@@ -175,7 +160,8 @@ const Home = () => {
         (user) =>
           user.email === values.email ||
           user.telephone === values.telephone ||
-          user.BVN === values.BVN
+          user.BVN === values.BVN ||
+          user.accountNumber === values.accountNumber
       );
       if (userExists) {
         setMessage("User already exists");
@@ -200,17 +186,26 @@ const Home = () => {
       middleName: "",
       telephone: "",
       email: "",
-      authCode: "",
       accountNumber: "",
-      bankCode: "",
-      // BVN: "",
-      // AuthChannel: "",
+      BVN: "",
       terms: false,
+      loanAmount: "",
+      loanTenure: "",
     });
   };
 
   const closePopup = () => {
     setMessage(null);
+  };
+
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
+  const openTermsModal = () => {
+    setShowTermsModal(true);
+  };
+
+  const closeTermsModal = () => {
+    setShowTermsModal(false);
   };
 
   return (
@@ -223,12 +218,8 @@ const Home = () => {
           <StyledHome>
             <div className="left">
               <div className="left-content">
-                <h1>Get more loan with us at ease!</h1>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when a
-                </p>
+                <h1>Do you need funding for a financial plan?</h1>
+                <p>Let's help you hit your business target with easier plans</p>
                 <button>Read more</button>
               </div>
             </div>
@@ -250,6 +241,9 @@ const Home = () => {
                   {inputs.map((input) => (
                     <UserFormInput
                       key={input.id}
+                      openTermsModal={openTermsModal}
+                      closeTermsModal={closeTermsModal}
+                      showTermsModal={showTermsModal}
                       {...input}
                       value={values[input.name]}
                       className="terms"
@@ -299,6 +293,15 @@ const Home = () => {
                     </select>
                   </div>
 
+                  {
+                    // show the modal if the user clicks on the terms and conditions
+                    showTermsModal && (
+                      <TermsAndConditionModal
+                        closeTermsModal={closeTermsModal}
+                      />
+                    )
+                  }
+
                   <button type="submit" disabled={!values.terms}>
                     Submit
                   </button>
@@ -316,7 +319,6 @@ const Home = () => {
                     </button>
 
                     <div className="popup-content">
-                      {/* {<img src={successIcon} alt="success" /> */}
                       {message === "User added successfully" ? (
                         <img src={successIcon} alt="success" />
                       ) : (
@@ -351,6 +353,7 @@ const StyledHome = styled.section`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "left right";
+  position: relative;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -362,7 +365,7 @@ const StyledHome = styled.section`
 
   .left {
     grid-area: left;
-    background-color: #34a853;
+    background-color: #007526;
 
     .left-content {
       height: 100%;
@@ -391,20 +394,26 @@ const StyledHome = styled.section`
         font-family: "Montserrat Alternates";
         font-style: normal;
         font-weight: 700;
-        font-size: 60px;
+        font-size: 56px;
         line-height: 60px;
         color: #fdc800;
 
         @media (max-width: 425px) {
-          font-size: 55px;
+          font-size: 40px;
+          line-height: 40px;
         }
       }
 
       p {
         font-weight: 300;
-        font-size: 14px;
-        line-height: 24px;
+        font-size: 30px;
+        line-height: 40px;
         color: #ffffff;
+
+        @media (max-width: 425px) {
+          font-size: 25px;
+          line-height: 30px;
+        }
       }
 
       button {

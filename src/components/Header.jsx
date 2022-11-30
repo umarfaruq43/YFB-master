@@ -2,7 +2,7 @@ import { Outlet } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import logo from "../assets/yfb-logo.svg";
+import logo from "../assets/yfb-logo.png";
 
 const StyledHeader = styled.header`
   position: sticky;
@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   z-index: 100;
 
   @media (max-width: 768px) {
-    background-color: #34a853;
+    background-color: #108d39;
     border-bottom: 1px solid #83bf4f;
   }
 
@@ -22,6 +22,11 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: -37px;
+
+    @media (max-width: 768px) {
+      margin-top: 0;
+    }
 
     a {
       text-decoration: none;
@@ -34,10 +39,11 @@ const StyledHeader = styled.header`
       transition: all 0.2s ease-in-out;
 
       span {
-        color: #34a853;
+        color: #007526;
 
         @media (max-width: 768px) {
           color: #fdc800;
+          margin-top: ;
         }
       }
     }
@@ -49,9 +55,22 @@ const Header = () => {
     <StyledHeader>
       <nav>
         <Link to="/">
-          <img src={logo} alt="yfb logo" />
+          <img
+            src={logo}
+            alt="yfb logo"
+            style={{
+              width: "187px",
+            }}
+          />
         </Link>
-        <Link to="/signup">
+        <Link
+          to="/signup"
+          style={
+            {
+              // marginTop: "-57px",
+            }
+          }
+        >
           Admin? <span>Sign in</span>
         </Link>
         {/* <Outlet /> */}

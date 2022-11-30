@@ -1,17 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../userInfoModal.css";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { FcCheckmark } from "react-icons/fc";
 import { TbDownload } from "react-icons/tb";
 import Avatar from "../assets/avatar.png";
-import { useLoading, useSalaryDetails } from "../context/context";
+import {
+    useApprovedLoan,
+    useLoading,
+    useSalaryDetails,
+} from "../context/context";
 import Skeleton from "./Skeleton";
+import { useNavigate } from "react-router-dom";
+import { getDocs, addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
 const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
     const { loading } = useLoading();
-    const { salaryDetails } = useSalaryDetails();
-    console.log(salaryDetails);
+    const { salaryDetails, handleDisbursement } = useSalaryDetails();
+    const { approvedLoan, rejectLoan, isApprovedLoan, salaryFullDetails } =
+        useApprovedLoan();
     const loan = salaryDetails.data && salaryDetails.data.loanHistoryDetails;
-    console.log(loan);
+
+    const navigate = useNavigate();
+    const handleDisbursementSubmit = () => {
+        navigate("/admin");
+    };
+
+    /************* function to handle the loan approval  **************/
+    useEffect(() => {
+        if (isApprovedLoan) {
+            setTimeout(() => {
+                rejectLoan();
+            }, 1000);
+        }
+    }, [isApprovedLoan, rejectLoan]);
+
+    const handleApproveLoan = () => {
+        approvedLoan();
+    };
+
+    // save salary full details to local storage and firebase if approved
+    const [salaryToSaveLoading, setSalaryToSaveLoading] = useState(false);
+
+    const handleSaveSalaryDetails = async () => {
+        setSalaryToSaveLoading(true);
+        // do not add to firebase if already added
+        const docRef = await getDocs(collection(db, "salaryDetails"));
+        const data = docRef.docs.map((doc) => doc.data());
+        const isSalaryDetailsExist = data.find(
+            (item) =>
+                item.data.id === salaryFullDetails.data.id &&
+                item.BVN === salaryFullDetails.BVN &&
+                item.data.loanHistoryDetails
+        );
+        if (!isSalaryDetailsExist) {
+            await addDoc(collection(db, "salaryDetails"), {
+                ...salaryFullDetails,
+            });
+        }
+        setSalaryToSaveLoading(false);
+    };
+
     return (
         <div className={`userInfoModal ${showUserInfo ? "show" : ""}`}>
             <div className="infoBody">
@@ -68,7 +116,8 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
                                                     Amount:
                                                 </div>
                                                 <div className="infoResult">
-                                                    Pending...
+                                                    {salaryFullDetails &&
+                                                        salaryFullDetails.LoanAmount}
                                                 </div>
                                             </div>
                                             <div className="subCol pt_14">
@@ -205,7 +254,7 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
                                                 ) : (
                                                     <>
                                                         {data &&
-                                                            data.data.salaryPaymentDetails.map(
+                                                            salaryDetails.data.salaryPaymentDetails.map(
                                                                 (cell, i) => {
                                                                     return (
                                                                         <tr
@@ -220,6 +269,7 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
                                                                                     )[0]
                                                                                 }
                                                                             </td>
+                                                                            appro
                                                                             <td>
                                                                                 {
                                                                                     cell.amount
@@ -252,11 +302,20 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
                                         style={{ flexDirection: "row" }}
                                     >
                                         <div className="approve">
-                                            <button>
+                                            <button
+                                                onClick={() => {
+                                                    handleApproveLoan();
+                                                    handleSaveSalaryDetails();
+                                                    handleDisbursement(
+                                                        salaryDetails.data
+                                                            .customerId
+                                                    );
+                                                }}
+                                            >
                                                 <span>
                                                     <FcCheckmark className="icon" />
                                                 </span>
-                                                Approve Loan
+                                                Disburse Loan
                                             </button>
                                         </div>
                                         {/* Button_two  */}

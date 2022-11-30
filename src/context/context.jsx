@@ -17,6 +17,7 @@ import {
 
 const Context = createContext();
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 export default function ContextProvider({ children }) {
     const [data, setData] = useState([]);
@@ -49,6 +50,32 @@ export default function ContextProvider({ children }) {
 
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => setUser(currentUser));
+    }, []);
+
+    // get salary users from firebase
+    const [salaryUsers, setSalaryUsers] = useState([]);
+    const [salaryUsersLoading, setSalaryUsersLoading] = useState(true);
+
+    useEffect(() => {
+        try {
+            const getSalaryUsers = async () => {
+                setSalaryUsersLoading(true);
+
+                const querySnapshot = await getDocs(
+                    collection(db, "salaryDetails")
+                );
+                // don't add the id to the data object
+                const data = querySnapshot.docs.map((doc, index) => ({
+                    number: index + 1,
+                    ...doc.data(),
+                }));
+                setSalaryUsers(data);
+                setSalaryUsersLoading(false);
+            };
+            getSalaryUsers();
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
 
     // sign up
@@ -116,9 +143,22 @@ export default function ContextProvider({ children }) {
         }
     };
 
+    //   ***************  hanlde disbursement info  **********************
+    const navigate = useNavigate();
+    const [customerId, setCustomerId] = useState(0);
+    //     const [currentUserAuthCode, setCurrentUserAuthCode] = useState("");
+    const handleDisbursement = (currentUserId) => {
+        setCustomerId(currentUserId);
+        navigate("/admin");
+    };
+
     //   ***************  get user info  **********************
     const [salaryDetails, setSalaryDetails] = useState([]);
+    const [currentUserInfo, setCurrentUserInfo] = useState(null);
+
+    const [salaryFullDetails, setSalaryFullDetails] = useState([]);
     const getUserInfo = (info) => {
+        setCurrentUserInfo(info);
         setLoading(true);
         var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
         var apiToken =
@@ -135,12 +175,12 @@ export default function ContextProvider({ children }) {
         raw.lastName = info.lastName;
         raw.middleName = info.middleName;
         raw.accountNumber = info.accountNumber;
-        raw.bankCode = `0${info.bank && info.bank}`;
+        raw.bankCode = info.bank && info.bank;
         raw.bvn = info.BVN;
         raw.authorisationChannel = "USSD";
 
-        // console.log(info);
-        console.log(raw);
+        console.log("info", info);
+        console.log("raw", raw);
 
         let Headers = {
             method: "POST",
@@ -159,11 +199,19 @@ export default function ContextProvider({ children }) {
         )
             .then((res) => res.json())
             .then((data) => {
+                console.log("data", data);
                 setSalaryDetails(data);
+                const fullDetails = { ...info, ...data };
+		// passing down the current autorization code for disburcement use
+                fullDetails.currentUserAuthCode = raw.authorisationCode;
+                console.log("full Details", fullDetails);
+                setSalaryFullDetails(fullDetails);
                 setLoading(false);
-                console.log(data);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.log(err);
             });
-        //     console.log(Headers);
     };
 
     // Generate access token
@@ -203,10 +251,24 @@ export default function ContextProvider({ children }) {
         }
     };
 
+    const [isApprovedLoan, setIsApprovedLoan] = useState(false);
+
+    const approvedLoan = () => {
+        setIsApprovedLoan(true);
+    };
+
+    const rejectLoan = () => {
+        setIsApprovedLoan(false);
+    };
+
     const value = {
         db,
         salaryDetails,
         getUserInfo,
+        currentUserInfo,
+
+        customerId,
+        handleDisbursement,
         data,
         dataLoading,
         auth,
@@ -222,6 +284,12 @@ export default function ContextProvider({ children }) {
         expiresIn,
         accessToken,
         deleteUser,
+        isApprovedLoan,
+        approvedLoan,
+        rejectLoan,
+        salaryFullDetails,
+        setSalaryFullDetails,
+        salaryUsers,
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -249,5 +317,9 @@ export const useLoading = () => {
 };
 
 export const useSalaryDetails = () => {
+    return useContext(Context);
+};
+
+export const useApprovedLoan = () => {
     return useContext(Context);
 };

@@ -1,110 +1,110 @@
 export const bank_codes = [
   {
     banName: "ACCESS BANK PLC",
-    bankCode: 44,
+    bankCode: "044",
   },
   {
     bankName: "CITI BANK",
-    bankCode: 23,
+    bankCode: "023",
   },
   {
     bankName: "DIAMOND BANK PLC",
-    bankCode: 63,
+    bankCode: "063",
   },
   {
     bankName: "ECOBANK NIGERIA PLC",
-    bankCode: 50,
+    bankCode: "050",
   },
   {
     bankName: "FIDELITY BANK PLC",
-    bankCode: 70,
+    bankCode: "070",
   },
   {
     bankName: "FIRST BANK OF NIGERIA PLC",
-    bankCode: 11,
+    bankCode: "011",
   },
   {
     bankName: "FIRST CITY MONUMENT BANK PLC",
-    bankCode: 214,
+    bankCode: "214",
   },
   {
     bankName: "GUARANTY TRUST BANK PLC",
-    bankCode: 58,
+    bankCode: "058",
   },
   {
-    bankName: "  HERITAGE BANK",
-    bankCode: 30,
+    bankName: "HERITAGE BANK",
+    bankCode: "030",
   },
   {
-    bankName: "  JAIZ BANK",
-    bankCode: 301,
+    bankName: "JAIZ BANK",
+    bankCode: "301",
   },
   {
     bankName: "KEYSTONE BANK",
-    bankCode: 82,
+    bankCode: "082",
   },
   {
     bankName: "SKYE BANK PLC",
-    bankCode: 76,
+    bankCode: "076",
   },
   {
     bankName: "STANBIC-IBTC BANK PLC",
-    B: 39,
+    bankCode: "039",
   },
   {
     bankName: "STANDARD CHARTERED",
-    bankCode: 68,
+    bankCode: "068",
   },
   {
     bankName: "STERLING BANK PLC",
-    bankCode: 232,
+    bankCode: "232",
   },
   {
     bankName: "UNION BANK OF NIGERIA PLC",
-    bankCode: 32,
+    bankCode: "032",
   },
   {
     bankName: "UNITED BANK FOR AFRICA PLC",
-    bankCode: 33,
+    bankCode: "033",
   },
   {
     bankName: "UNITY BANK PLC",
-    bankCode: 215,
+    bankCode: "215",
   },
   {
     bankName: "WEMA BANK PLC",
-    bankCode: 35,
+    bankCode: "035",
   },
   {
     bankName: "ZENITH BANK PLC",
-    bankCode: 57,
+    bankCode: "057",
   },
   {
-    bankName: "  CBN",
-    bankCode: 0,
+    bankName: "CBN",
+    bankCode: "000",
   },
   {
     bankName: "CHIDERA MICROFINANCE BANK LIMITED",
-    B: 339,
+    bankCode: "339",
   },
   {
     bankName: "GOLDEN FUNDS MICROFINANCE BANK LIMITED",
-    bankCode: 338,
+    bankCode: "338",
   },
   {
     bankName: "URBAN MICROFINANCE BANK LIMITED",
-    bankCode: 344,
+    bankCode: "344",
   },
   {
     bankName: "MICROCRED MICROFINANCE BANK LIMITED",
-    bankCode: 271,
+    bankCode: "271",
   },
   {
     bankName: "OGIGE MICROFINANCE BANK LIMITED",
-    bankCode: 530,
+    bankCode: "530",
   },
   {
     bankName: "OHHA MICROFINANCE BANK LIMITED",
-    bankCode: 340,
+    bankCode: "340",
   },
 ];

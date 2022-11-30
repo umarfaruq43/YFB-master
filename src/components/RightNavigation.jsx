@@ -272,7 +272,7 @@ const RightNavigation = ({ open }) => {
 
   return (
     <StyledRightNav open={open}>
-      <div className="nav-time">
+      {/* <div className="nav-time">
         <button
           disabled={hour === 0 && minute === 0 && second === 0 ? false : true}
           onClick={() => {
@@ -317,7 +317,7 @@ const RightNavigation = ({ open }) => {
           <span>{second < 10 ? `0${second}` : second}</span>
         </div>
         <Loader />
-      </div>
+      </div> */}
       <div className="vertical-line">
         <span></span>
       </div>

@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState } from "react";
 import { dbContext } from "../context/context";
-import { COLUMNS } from "./columns";
+import { COLUMNS2 } from "./columns2";
 import {
   useTable,
   useSortBy,
@@ -17,7 +17,8 @@ import { Link } from "react-router-dom";
 import UserInfoModal from "../components/UserInfoModal";
 
 const PaginationTable = ({}) => {
-  const { data: userData, dataLoading } = dbContext();
+  const { salaryUsers: userData, dataLoading } = dbContext();
+  console.log(userData);
 
   //     state to toggle user info  modal
   const [showUserInfo, setShowUserInfo] = useState(false);
@@ -28,7 +29,7 @@ const PaginationTable = ({}) => {
     setShowUserInfo(!showUserInfo);
   };
 
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => COLUMNS2, []);
   const data = useMemo(() => userData, [userData]);
 
   const tableInstance = useTable(

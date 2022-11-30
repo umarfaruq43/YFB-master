@@ -29,7 +29,7 @@ const StyledFormInput = styled.div`
 
     &:focus {
       outline: none;
-      border: 2px solid #fdc800;
+      border: 2px solid #344054;
     }
 
     &:valid {

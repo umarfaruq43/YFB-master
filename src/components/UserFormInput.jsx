@@ -1,13 +1,73 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { bank_codes } from "../bankCodes";
+
+const UserFormInput = ({
+  openTermsModal,
+  closeTermsModal,
+  showTermsModal,
+  label,
+  onChange,
+  id,
+  errorMessage,
+  className,
+  loading,
+  ...inputProps
+}) => {
+  const [focused, setFocused] = useState(false);
+
+  const handleFocused = (e) => {
+    setFocused(true);
+  };
+
+  useEffect(() => {
+    if (focused) {
+      setFocused(false);
+    }
+  }, [!loading]);
+
+  return (
+    <StyledUserFormInput>
+      {inputProps.type === "checkbox" ? (
+        <div className={className}>
+          <div
+            className="select"
+            style={{
+              width: "100%",
+            }}
+          ></div>
+
+          <input {...inputProps} onChange={onChange} id={id} />
+          <label htmlFor={id}>
+            "Filling in your details, means you agree to provide your data and
+            you’re with our{" "}
+            <Link onClick={openTermsModal}>Terms and Conditions</Link>"
+          </label>
+        </div>
+      ) : (
+        <div>
+          <input
+            {...inputProps}
+            onChange={onChange}
+            id={id}
+            onBlur={handleFocused}
+            focused={focused.toString()}
+            // remove the invalid if the form is submitted
+          />
+          <span>
+            <small>{errorMessage}</small>
+          </span>
+        </div>
+      )}
+    </StyledUserFormInput>
+  );
+};
+
+export default UserFormInput;
 
 const StyledUserFormInput = styled.div`
   display: flex;
   flex-direction: column;
-  // margin-bottom: 0.6rem;
-
-  // target the input with the type checkbox
 
   label {
     font-size: 0.8rem;
@@ -101,64 +161,3 @@ const StyledUserFormInput = styled.div`
     border: 1px solid red;
   }
 `;
-
-const UserFormInput = ({
-  label,
-  onChange,
-  id,
-  errorMessage,
-  className,
-  loading,
-  ...inputProps
-}) => {
-  const [focused, setFocused] = useState(false);
-
-  const handleFocused = (e) => {
-    setFocused(true);
-  };
-
-  useEffect(() => {
-    if (focused) {
-      setFocused(false);
-    }
-  }, [!loading]);
-
-  return (
-    <StyledUserFormInput>
-      {inputProps.type === "checkbox" ? (
-        <div className={className}>
-          <div
-            className="select"
-            style={{
-              width: "100%",
-            }}
-          ></div>
-
-          <input {...inputProps} onChange={onChange} id={id} />
-          <label htmlFor={id}>
-            "Filling in your details, means you agree to provide your data and
-            you’re with our{" "}
-            <a href="https://www.google.com">Terms and Conditions</a>"
-          </label>
-        </div>
-      ) : (
-        <div>
-          <label htmlFor={id}>{label}</label>
-          <input
-            {...inputProps}
-            onChange={onChange}
-            id={id}
-            onBlur={handleFocused}
-            focused={focused.toString()}
-            // remove the invalid if the form is submitted
-          />
-          <span>
-            <small>{errorMessage}</small>
-          </span>
-        </div>
-      )}
-    </StyledUserFormInput>
-  );
-};
-
-export default UserFormInput;

@@ -1,5 +1,6 @@
 import { Delete, OpenInNew } from "@mui/icons-material";
 import { doc, documentId } from "firebase/firestore";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useDelete } from "../context/context";
 
@@ -17,13 +18,16 @@ export const COLUMNS = [
   },
 
   {
-    Header: "F/N",
+    Header: "First Name",
     accessor: "firstName",
+    // target the row and create a link to the user's profile
+    Cell: ({ row }) => linkToUser(row, "firstName"),
   },
 
   {
-    Header: "L/N",
+    Header: "Last Name",
     accessor: "lastName",
+    Cell: ({ row }) => linkToUser(row, "lastName"),
   },
 
   //   {
@@ -32,8 +36,9 @@ export const COLUMNS = [
   //   },
 
   {
-    Header: "Tel",
+    Header: "Telephone",
     accessor: "telephone",
+    Cell: ({ row }) => linkToUser(row, "telephone"),
   },
   //   {
   //     Header: "Auth Channel",
@@ -43,11 +48,13 @@ export const COLUMNS = [
   {
     Header: "BVN",
     accessor: "BVN",
+    Cell: ({ row }) => linkToUser(row, "BVN"),
   },
 
   {
-    Header: "Acct num",
+    Header: "Acc No",
     accessor: "accountNumber",
+    Cell: ({ row }) => linkToUser(row, "accountNumber"),
   },
 
   //   {
@@ -56,8 +63,9 @@ export const COLUMNS = [
   //   },
 
   {
-    Header: "B/C",
+    Header: "Bnk/C",
     accessor: "bank",
+    Cell: ({ row }) => linkToUser(row, "bank"),
   },
 
   // {
@@ -71,8 +79,6 @@ export const COLUMNS = [
     Cell: ({ row }) => {
       return row.original.info ? (
         <button className="info-btn">
-          {/* <Link to={`/user/${row.original.id}`}> */}
-
           <OpenInNew />
         </button>
       ) : (
@@ -107,6 +113,7 @@ export const COLUMNS = [
   },
 ];
 
+// add a delete icon to remove a user
 const addDelete = () => {
   const { data, user, deleteDoc } = useDelete();
   // add the row from the table to the deleteDoc function
@@ -133,3 +140,19 @@ const addDelete = () => {
     </StyledButton>
   );
 };
+
+// create a link to the user's profile
+function linkToUser(row, name) {
+  return (
+    <Link
+      to={`/dashboard/${row.original.id}`}
+      className="link"
+      style={{
+        color: "#475467",
+        textDecoration: "none",
+      }}
+    >
+      {row.original[name]}
+    </Link>
+  );
+}

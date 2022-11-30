@@ -1,0 +1,97 @@
+.disbursement {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 10rem 0px; */
+}
+
+.disbursement .content {
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.308);
+  border-radius: 7px;
+  margin: 0 auto;
+  padding: 26px;
+}
+.disbursement .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.disbursement .col {
+  max-width: 48%;
+}
+
+.disbursement .content input {
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 9px 10px;
+  border-radius: 4px;
+}
+
+.disbursement .content input:focus {
+  border: 1px solid rgb(253, 200, 0);
+  outline: none;
+}
+
+.disbursement label {
+  font-size: small;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+.disbursement .col {
+  margin-top: 10px;
+}
+
+.disburseButton{
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+.disbursement .approve {
+  width: 48%;
+  margin-top: 30px;
+  padding: 10px;
+  border: none;
+  background-color: #34a853;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+
+.disbursement .back {
+  width: 48%;
+  margin-top: 30px;
+  padding: 10px;
+  border: none;
+  background-color: gray;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.disbursement .approve:focus,
+.disbursement .approve:active {
+  outline: none;
+}
+
+@media screen and (max-width: 560px) {
+  .disbursement .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .disbursement .col {
+    max-width: 100%;
+    width: 100%;
+  }
+}

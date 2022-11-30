@@ -4,15 +4,47 @@ import { Routes, Route, useParams } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import AdminSignupPage from "./pages/AdminSignUpPage";
 import { dbContext } from "./context/context";
+import UserProfile from "./pages/UserProfile";
+import TermsAndCondition from "./pages/TermsAndCondition";
+import { Protected } from "./components/Protected";
+import AppLogout from "./components/AppLogout";
+import AdminDisbursementPage from "./pages/AdminDisbursementPage";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Dashboard />}></Route>
-      {/* create a route after dashboard for userId */}
-      <Route path="/dashboard/:userId" element={<h1>User Data</h1>}></Route>
+      <Route
+        path="/dashboard"
+        element={
+          <Protected>
+            <AppLogout>
+              <Dashboard />
+            </AppLogout>
+          </Protected>
+        }
+      />
 
+      <Route
+        path="/dashboard/:userId"
+        element={
+          <Protected>
+            <AppLogout>
+              <UserProfile />
+            </AppLogout>
+          </Protected>
+        }
+      ></Route>
+      <Route
+        path="/admin"
+        element={
+          <Protected>
+            <AdminDisbursementPage />
+          </Protected>
+        }
+      />
+      <Route path="*" element={<div>404</div>}></Route>
+      <Route path="/policy" element={<TermsAndCondition />}></Route>
       <Route path="/signup" element={<AdminSignupPage />} />
     </Routes>
   );

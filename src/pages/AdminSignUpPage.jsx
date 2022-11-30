@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
-import logo from "../assets/yfb-logo-light.svg";
+import logo from "../assets/yfb-logo-dark.png";
 import FormInput from "../components/FormInput";
 import Skeleton from "../components/Skeleton";
 import { useAuth } from "../context/context";
@@ -51,7 +51,7 @@ const AdminSignUpPage = () => {
         setSignupData({ ...signupData, password: e.target.value }),
       name: "password",
       placeholder: "Enter your password",
-      pattern: "[a-zA-Z0-9]{8,}",
+      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})",
       required: true,
       errorMessage: "Please enter a valid password",
     },
@@ -80,7 +80,6 @@ const AdminSignUpPage = () => {
       onChange: (e) => setLoginData({ ...loginData, email: e.target.value }),
       name: "email",
       placeholder: "Enter your email",
-      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$",
       required: true,
       errorMessage: "Please enter a valid email",
     },
@@ -93,7 +92,6 @@ const AdminSignUpPage = () => {
       onChange: (e) => setLoginData({ ...loginData, password: e.target.value }),
       name: "password",
       placeholder: "Enter your password",
-      pattern: "[a-zA-Z0-9]{8,}",
       required: true,
       errorMessage: "Please enter a valid password",
     },
@@ -107,8 +105,6 @@ const AdminSignUpPage = () => {
   // Submit Form
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(signupData);
-    console.log(loginData);
 
     if (switched) {
       handleSignup(signupData.email, signupData.password);
@@ -144,6 +140,7 @@ const AdminSignUpPage = () => {
     "suleimansuleiman606@gmail.com",
     "monsurrajiybs@gmail.com",
     "ella@gmail.com",
+    "babes2@gmail.com",
   ];
 
   // Redirect to dashboard if user is authorised
@@ -175,7 +172,11 @@ const AdminSignUpPage = () => {
     <StyledAdminSignupPage>
       <div className="container">
         <Link to="/">
-          <img src={logo} alt="" />
+          <img
+            src={logo}
+            alt=""
+            style={{ width: "150px", marginBottom: "10px" }}
+          />
         </Link>
 
         <div className="buttonContainer">

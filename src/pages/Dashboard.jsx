@@ -5,176 +5,204 @@ import { Navigate } from "react-router-dom";
 import HeaderDashboard from "../components/HeaderDashboard";
 import styled from "styled-components";
 import { dbContext } from "../context/context";
-import SortingTable from "../components/SortingTable";
 import PaginationTable from "../components/PaginationTable";
+import PaginationTable2 from "../components/PaginationTable2";
 
 const StyledDashboard = styled.header`
-    background-color: #f6f6f6;
+  background-color: #f6f6f6;
 
-    .dashboard-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 10px;
-        padding-top: 50px;
-        background-color: transparent;
+  .dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    padding-top: 50px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 50px;
+
+    .dashboad-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      // justify-content: space-between;
+
+      .dashboard-title {
+        font-family: "Montserrat Alternates";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 29px;
+        color: #34a853;
+      }
+
+      .dashboard-search-container {
+        // take up the rest of the space
+        flex: 1;
+        background-color: #ededed;
+
         display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding-bottom: 50px;
+        align-items: center;
+        gap: 10px;
+        padding-left: 32px;
+        padding-right: 32px;
+        border-radius: 10px;
 
-        .dashboad-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            // justify-content: space-between;
+        .dashboard-search {
+          border: none;
+          outline: none;
+          flex: 1;
+          height: 64px;
+          background-color: transparent;
+          font-size: 18px;
 
-            .dashboard-title {
-                font-family: "Montserrat Alternates";
-                font-style: normal;
-                font-weight: 600;
-                font-size: 24px;
-                line-height: 29px;
-                color: #34a853;
-            }
+          &::placeholder {
+            color: #939393;
+          }
 
-            .dashboard-search-container {
-                // take up the rest of the space
-                flex: 1;
-                background-color: #ededed;
+          &:focus,
+          &:active,
+          &:focus-visible {
+            outline: none;
+          }
 
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                padding-left: 32px;
-                padding-right: 32px;
-                border-radius: 10px;
+          // remove the clear button
+          &::-ms-clear {
+            display: none;
+          }
 
-                .dashboard-search {
-                    border: none;
-                    outline: none;
-                    flex: 1;
-                    height: 64px;
-                    background-color: transparent;
-                    font-size: 18px;
-
-                    &::placeholder {
-                        color: #939393;
-                    }
-
-                    &:focus,
-                    &:active,
-                    &:focus-visible {
-                        outline: none;
-                    }
-
-                    // remove the clear button
-                    &::-ms-clear {
-                        display: none;
-                    }
-
-                    &::-webkit-search-cancel-button {
-                        display: none;
-                    }
-                }
-
-                .dashboard-search-icon {
-                    color: #939393;
-                }
-
-                .clear-icon {
-                    display: none;
-                }
-
-                &:hover {
-                    .clear-icon {
-                        display: block;
-                    }
-                }
-            }
+          &::-webkit-search-cancel-button {
+            display: none;
+          }
         }
 
-        .dashboard-subheader {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-
-            button {
-                border: none;
-                outline: none;
-                cursor: pointer;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 29px;
-                padding: 10px 24px;
-                border-radius: 4px;
-                transition: all 0.2s ease-in-out;
-                color: #fff;
-            }
-
-            button:nth-child(1) {
-                background-color: #34a853;
-
-                &:hover {
-                    background-color: #2e8b46;
-                }
-            }
-
-            button:nth-child(2) {
-                background-color: #667085;
-
-                &:hover {
-                    background-color: #4e5665;
-                }
-            }
-
-            svg {
-                background-color: #f6f6f6;
-                color: #939393;
-                cursor: pointer;
-            }
+        .dashboard-search-icon {
+          color: #939393;
         }
+
+        .clear-icon {
+          display: none;
+        }
+
+        &:hover {
+          .clear-icon {
+            display: block;
+          }
+        }
+      }
     }
+
+    .dashboard-subheader {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .btn {
+        height: 40px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 17px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        padding: 10px 24px;
+      }
+
+      .btn:hover {
+        filter: brightness(0.9);
+      }
+
+      .btn-primary {
+        background-color: #34a853;
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background-color: #d0d5dd;
+        color: #fff;
+      }
+
+      .btn-secondary:hover {
+        background-color: #b3b9c2;
+        filter: brightness(1);
+      }
+
+      svg {
+        background-color: #f6f6f6;
+        color: #939393;
+        cursor: pointer;
+      }
+    }
+  }
 `;
 
 const Dashboard = () => {
-    const { user, handleSignOut, auth } = useAuth();
-    const logout = async () => {
-        await signOut(auth);
-    };
+  const [switched, setSwitched] = useState(true);
 
-    const [searchInput, setSearchInput] = useState("");
+  // Form Button Switched
+  const handleSwitch = () => {
+    setSwitched(!switched);
+  };
+  const { user, handleSignOut, auth } = useAuth();
+  const logout = async () => {
+    await signOut(auth);
+  };
 
-    const handleSearchInput = (e) => {
-        setSearchInput(e.target.value);
-    };
+  const [searchInput, setSearchInput] = useState("");
 
-    const handleClearSearchInput = () => {
-        setSearchInput("");
-    };
+  const handleSearchInput = (e) => {
+    setSearchInput(e.target.value);
+  };
 
-    const { data, dataLoading } = dbContext();
+  const handleClearSearchInput = () => {
+    setSearchInput("");
+  };
 
+  // Button for form switch
+  let className = switched ? "btn btn-primary" : "btn btn-secondary";
 
-    if (!user) return <Navigate to="/signup" />;
+  const { data, dataLoading } = dbContext();
 
-    return (
-        <>
-            <HeaderDashboard />
-            <StyledDashboard>
-                <div className="dashboard-content">
-                    <div className="dashboad-header">
-                        <h3 className="dashboard-title">Dashboard</h3>
-                    </div>
+  if (!user) return <Navigate to="/signup" />;
 
-                    <div className="dashboard-subheader">
-                        <button>All Clients</button>
-                        <button>Approved</button>
-                    </div>
-                    <PaginationTable data={data} />
-                </div>
-            </StyledDashboard>
-        </>
-    );
+  return (
+    <>
+      <HeaderDashboard />
+      <StyledDashboard>
+        <div className="dashboard-content">
+          <div className="dashboad-header">
+            <h3 className="dashboard-title">Dashboard</h3>
+          </div>
+
+          <div className="dashboard-subheader">
+            <button
+              className={className}
+              onClick={handleSwitch}
+              disabled={switched}
+            >
+              All Clients
+            </button>
+            <button
+              className={switched ? "btn btn-secondary" : "btn btn-primary"}
+              onClick={handleSwitch}
+              disabled={!switched}
+            >
+              Approved
+            </button>
+          </div>
+          {switched ? (
+            <PaginationTable data={data} />
+          ) : (
+            <>
+              <PaginationTable2 data={data} />
+            </>
+          )}
+        </div>
+      </StyledDashboard>
+    </>
+  );
 };
 
 export default Dashboard;
