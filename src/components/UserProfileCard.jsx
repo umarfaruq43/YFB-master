@@ -43,7 +43,6 @@ const UserProfileCard = ({ icon, title, value }) => {
         <h4>{value}</h4>
       </div>
       <div
-        div
         className="profile-card__body__icon"
         onClick={() => {
           navigator.clipboard.writeText(value);

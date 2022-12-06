@@ -1,5 +1,4 @@
 import { Delete, OpenInNew } from "@mui/icons-material";
-import { doc, documentId } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useDelete } from "../context/context";
@@ -20,7 +19,6 @@ export const COLUMNS = [
   {
     Header: "First Name",
     accessor: "firstName",
-    // target the row and create a link to the user's profile
     Cell: ({ row }) => linkToUser(row, "firstName"),
   },
 
@@ -30,20 +28,11 @@ export const COLUMNS = [
     Cell: ({ row }) => linkToUser(row, "lastName"),
   },
 
-  //   {
-  //     Header: "Middle Name",
-  //     accessor: "middleName",
-  //   },
-
   {
     Header: "Telephone",
     accessor: "telephone",
     Cell: ({ row }) => linkToUser(row, "telephone"),
   },
-  //   {
-  //     Header: "Auth Channel",
-  //     accessor: "AuthChannel",
-  //   },
 
   {
     Header: "BVN",
@@ -57,25 +46,15 @@ export const COLUMNS = [
     Cell: ({ row }) => linkToUser(row, "accountNumber"),
   },
 
-  //   {
-  //     Header: "Auth Code",
-  //     accessor: "authCode",
-  //   },
-
   {
     Header: "Bnk/C",
     accessor: "bank",
     Cell: ({ row }) => linkToUser(row, "bank"),
   },
 
-  // {
-  //   Header: "Email",
-  //   accessor: "email",
-  // },
   {
     Header: "Info",
-    accessor: "",
-    //   check if cell is empty then render a button
+
     Cell: ({ row }) => {
       return row.original.info ? (
         <button className="info-btn">
@@ -105,10 +84,7 @@ export const COLUMNS = [
     Header: "Del",
     accessor: "",
     Cell: ({ row }) => {
-      return (
-        // addDelete(row)
-        addDelete()
-      );
+      return addDelete();
     },
   },
 ];

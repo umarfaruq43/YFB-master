@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { Avatar } from "@mui/material";
 import {
   ArrowBackIosNewSharp,
-  Backspace,
   CopyAll,
   Email,
   Phone,
@@ -84,7 +83,6 @@ const UserProfile = () => {
     bank,
     email,
     firstName,
-    id,
     lastName,
     middleName,
     number: idNumber,
@@ -121,8 +119,7 @@ const UserProfile = () => {
                 <a href={`tel:${telephone}`}>
                   <Phone />
                 </a>
-                {/* Email the user */}
-                {/* <a href={`mailto:${email}`}> */}
+
                 <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
                   <Email />
                 </a>
@@ -180,6 +177,16 @@ const UserProfile = () => {
             <UserProfileCard
               title="Middle Name"
               value={middleName}
+              icon={<CopyAll />}
+            />
+            <UserProfileCard
+              title="Loan Amount"
+              value={user.loanAmount}
+              icon={<CopyAll />}
+            />
+            <UserProfileCard
+              title="Number of Repayments"
+              value={user.numberOfRepayments}
               icon={<CopyAll />}
             />
           </div>

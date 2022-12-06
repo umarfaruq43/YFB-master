@@ -1,0 +1,40 @@
+.modalLayout {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.616);
+    top: 0;
+    width: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    position: relative;
+    max-width: 700px;
+    background-color: #fff;
+    width: 100%;
+    padding: 3 0px 30px;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+    right: 15px;
+}
+
+.modal_text {
+    padding: 40px 0px;
+    text-align: center;
+}
+
+/* This class have to stay below the other styles so as to have the ability to override the hidden property of the modal  */
+.show {
+    display: none;
+}

@@ -21,6 +21,8 @@ const Home = () => {
     accountNumber: "",
     BVN: "",
     terms: false,
+    loanAmount: "",
+    numberOfRepayments: "",
   });
   const [optionSelect, setOptionSelect] = useState(false);
 
@@ -108,18 +110,18 @@ const Home = () => {
       type: "text",
       placeholder: "Enter your loan amount",
       errorMessage: "loan amount should be 4 digits or more",
-      name: "LoanAmount",
+      name: "loanAmount",
       required: true,
       pattern: "[0-9]{4,}",
     },
 
     {
-      id: "loanTenure",
-      label: "Loan Tenure",
+      id: "numberOfRepayments",
+      label: "Number of Repayments",
       type: "text",
-      placeholder: "Enter your loan tenure",
-      errorMessage: "loan tenure should be 1 digits or more",
-      name: "LoanTenure",
+      placeholder: "Enter your number of repayments",
+      errorMessage: "Number of repayments should be 1 digits or more",
+      name: "numberOfRepayments",
       required: true,
       pattern: "[0-9]{1,}",
     },
@@ -190,7 +192,7 @@ const Home = () => {
       BVN: "",
       terms: false,
       loanAmount: "",
-      loanTenure: "",
+      number: "",
     });
   };
 

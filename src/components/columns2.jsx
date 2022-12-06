@@ -1,14 +1,4 @@
-import {
-  Delete,
-  DoDisturb,
-  DoDisturbAlt,
-  DoNotDisturb,
-  History,
-  HistoryEduSharp,
-  OpenInNew,
-  Stop,
-  StopCircle,
-} from "@mui/icons-material";
+import { Delete, DoNotDisturb, History } from "@mui/icons-material";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
@@ -20,8 +10,8 @@ const StyledButton = styled.button`
 
 export const COLUMNS2 = [
   {
-    Header: "CuId",
-    accessor: "data.customerId",
+    Header: "Customer Id",
+    accessor: "number",
   },
 
   {
@@ -35,23 +25,23 @@ export const COLUMNS2 = [
   },
 
   {
-    Header: "MRef",
-    accessor: "'",
+    Header: "Ref",
+    accessor: "data.mandateReference",
   },
 
   {
     Header: "AuthCode",
-    accessor: "",
+    accessor: "data.authorisationCode",
   },
 
   {
-    Header: "SLCollection",
+    Header: "Stop Loss",
     accessor: "",
     Cell: ({ row }) => addIcons(<DoNotDisturb />),
   },
 
   {
-    Header: "MHisotry",
+    Header: "Hisotry",
     accessor: "",
     Cell: ({ row }) => addIcons(<History />),
   },

@@ -4,6 +4,7 @@ import {
     deleteDoc,
     doc,
     Firestore,
+    addDoc,
 } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { db, auth } from "../firebase";
@@ -78,6 +79,30 @@ export default function ContextProvider({ children }) {
         }
     }, []);
 
+    const storeSalaryDetails = async (data2) => {
+        try {
+            let docRef = await addDoc(collection(db, "salaryDetails"), data2);
+            console.log("Document written with ID: ", docRef.id);
+            // delete the user from the users collection
+            const querySnapshot = await getDocs(collection(db, "users"));
+            const data = querySnapshot.docs.map((doc, index) => ({
+                id: doc.id,
+                number: index + 1,
+                ...doc.data(),
+            }));
+            const user = data.find(
+                (user) =>
+                    user.email === data.email ||
+                    user.bvn === data.bvn ||
+                    user.bank === data.bank
+            );
+            console;
+            await deleteDoc(doc(db, "users", user.id));
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    };
+
     // sign up
     const handleSignup = async (email, password) => {
         setLoading(true);
@@ -143,16 +168,34 @@ export default function ContextProvider({ children }) {
         }
     };
 
+    //  deleteSalaryUser using the customer id
+    const deleteSalaryUser = async (id) => {
+        try {
+            await deleteDoc(doc(db, "salaryDetails", id));
+            // update the data
+            const querySnapshot = await getDocs(
+                collection(db, "salaryDetails")
+            );
+            const data = querySnapshot.docs.map((doc, index) => ({
+                number: index + 1,
+                ...doc.data(),
+            }));
+            setSalaryUsers(data);
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     //   ***************  hanlde disbursement info  **********************
     const navigate = useNavigate();
     const [customerId, setCustomerId] = useState(0);
-    //     const [currentUserAuthCode, setCurrentUserAuthCode] = useState("");
+    const [currentUserAuthCode, setCurrentUserAuthCode] = useState("");
     const handleDisbursement = (currentUserId) => {
         setCustomerId(currentUserId);
         navigate("/admin");
     };
 
-    //   ***************  get user info  **********************
     const [salaryDetails, setSalaryDetails] = useState([]);
     const [currentUserInfo, setCurrentUserInfo] = useState(null);
 
@@ -202,7 +245,7 @@ export default function ContextProvider({ children }) {
                 console.log("data", data);
                 setSalaryDetails(data);
                 const fullDetails = { ...info, ...data };
-		// passing down the current autorization code for disburcement use
+                // passing down the current autorization code for disburcement use
                 fullDetails.currentUserAuthCode = raw.authorisationCode;
                 console.log("full Details", fullDetails);
                 setSalaryFullDetails(fullDetails);
@@ -261,12 +304,113 @@ export default function ContextProvider({ children }) {
         setIsApprovedLoan(false);
     };
 
+    //     This is the function call for stop loan button.
+    const [approveLoanModal, setApproveLoanModal] = useState(false);
+    const [stopLossResult, setStopLossResult] = useState();
+    const stopLoss = (loanClient) => {
+        setApproveLoanModal(true);
+        console.log("loanClient", loanClient);
+        setLoading(true);
+        var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
+        var apiToken =
+            "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
+        var apiHash = CryptoJS.SHA512(apiKey + loanClient.telephone + apiToken);
+        var authorization =
+            "remitaConsumerKey=" + apiKey + ", remitaConsumerToken=" + apiHash;
+
+        let raw = {
+            authorisationCode: loanClient.data.authorisationCode,
+            customerId: loanClient.data.customerId,
+            mandateRef: loanClient.data.mandateReference,
+        };
+        let Headers = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                API_KEY: apiKey,
+                MERCHANT_ID: 27768931,
+                REQUEST_ID: loanClient.telephone,
+                AUTHORIZATION: authorization,
+            },
+            body: JSON.stringify(raw),
+        };
+
+        console.log("Stop Loss Headers", Headers);
+        console.log("Stop Loss Raw", raw);
+
+        fetch(
+            "https://remitademo.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/stop/loan",
+            Headers
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Stop loan Response", data);
+                setStopLossResult(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.log(err);
+            });
+    };
+
+    //     This is the function to get the mandate History
+    const [mdHistoryResponse, setMdHistoryResponse] = useState();
+    const [mdHistoryAction, setMdHistoryAction] = useState(false);
+    const mdHistory = (loanClient) => {
+        setApproveLoanModal(true);
+        console.log("loanClient For Md History", loanClient);
+        setLoading(true);
+        var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
+        var apiToken =
+            "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
+        var apiHash = CryptoJS.SHA512(apiKey + loanClient.telephone + apiToken);
+        var authorization =
+            "remitaConsumerKey=" + apiKey + ", remitaConsumerToken=" + apiHash;
+
+        let raw = {
+            authorisationCode: loanClient.data.authorisationCode,
+            customerId: loanClient.data.customerId,
+            mandateRef: loanClient.data.mandateReference,
+        };
+        let Headers = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                API_KEY: apiKey,
+                MERCHANT_ID: 27768931,
+                REQUEST_ID: loanClient.telephone,
+                AUTHORIZATION: authorization,
+            },
+            body: JSON.stringify(raw),
+        };
+
+        console.log("Mandate History Headers", Headers);
+        console.log("Mandate History Raw", raw);
+
+        fetch(
+            "https://remitademo.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/loan/payment/history",
+            Headers
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Mandate History Response", data);
+                setMdHistoryAction(true);
+
+                setMdHistoryResponse(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.log(err);
+            });
+    };
+
     const value = {
         db,
         salaryDetails,
         getUserInfo,
         currentUserInfo,
-
         customerId,
         handleDisbursement,
         data,
@@ -284,12 +428,24 @@ export default function ContextProvider({ children }) {
         expiresIn,
         accessToken,
         deleteUser,
+        deleteSalaryUser,
         isApprovedLoan,
         approvedLoan,
         rejectLoan,
         salaryFullDetails,
         setSalaryFullDetails,
         salaryUsers,
+        storeSalaryDetails,
+        salaryUsersLoading,
+        stopLoss,
+        approveLoanModal,
+        setApproveLoanModal,
+        stopLossResult,
+        setStopLossResult,
+        mdHistory,
+        mdHistoryAction,
+        mdHistoryResponse,
+        setMdHistoryAction,
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -321,5 +477,13 @@ export const useSalaryDetails = () => {
 };
 
 export const useApprovedLoan = () => {
+    return useContext(Context);
+};
+
+export const useStopLoss = () => {
+    return useContext(Context);
+};
+
+export const useMdHistory = () => {
     return useContext(Context);
 };
