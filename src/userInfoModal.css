@@ -1,7 +1,7 @@
 .userInfoModal {
     padding: auto;
     position: fixed;
-    display: none;
+    
     overflow-y: auto;
 
     background-color: rgba(0, 0, 0, 0.315) !important;
@@ -9,8 +9,9 @@
     right: 0;
     top: 0;
     bottom: 0;
+    height: 100%;
     width: 100%;
-    z-index: 1000;
+    z-index: 100;
     padding: 40px 0;
     min-height: 100vh;
 }
