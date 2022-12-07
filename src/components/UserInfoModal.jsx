@@ -6,14 +6,10 @@ import { TbDownload } from "react-icons/tb";
 import Avatar from "../assets/avatar.png";
 import { useLoading, useSalaryDetails } from "../context/context";
 import Skeleton from "./Skeleton";
-
 const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
     const { loading } = useLoading();
-    console.log(showUserInfo);
-
     const { salaryDetails, salaryFullDetails, handleDisbursement } =
         useSalaryDetails();
-
     const loan = salaryDetails.data && salaryDetails.data.loanHistoryDetails;
 
     return (

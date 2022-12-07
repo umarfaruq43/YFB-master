@@ -1,5 +1,5 @@
 .modalLayout {
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.616);
     top: 0;
     width: 100%;

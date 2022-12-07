@@ -358,7 +358,7 @@ export default function ContextProvider({ children }) {
     const [mdHistoryResponse, setMdHistoryResponse] = useState();
     const [mdHistoryAction, setMdHistoryAction] = useState(false);
     const mdHistory = (loanClient) => {
-        setApproveLoanModal(true);
+        setMdHistoryAction(true);
         console.log("loanClient For Md History", loanClient);
         setLoading(true);
         var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
@@ -395,7 +395,6 @@ export default function ContextProvider({ children }) {
             .then((res) => res.json())
             .then((data) => {
                 console.log("Mandate History Response", data);
-                setMdHistoryAction(true);
 
                 setMdHistoryResponse(data);
                 setLoading(false);

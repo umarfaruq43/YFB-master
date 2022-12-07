@@ -45,6 +45,7 @@ const PaginationTable = () => {
 
     return (
         <>
+            
             <UserInfoModal
                 showUserInfo={showUserInfo}
                 handleShowUserInfo={handleShowUserInfo}

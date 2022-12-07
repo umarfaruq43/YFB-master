@@ -13,6 +13,7 @@ import { ArrowDropDown, ArrowDropUp, FilterListOff } from "@mui/icons-material";
 import Skeleton from "./Skeleton";
 import { useDelete } from "../context/context";
 import Modal from "./Modal";
+import MandateHistory from "./MandateHistory";
 
 const PaginationTable = () => {
     const { data: userData, dataLoading, salaryUsers } = dbContext();
@@ -39,6 +40,7 @@ const PaginationTable = () => {
     return (
         <>
             {approveLoanModal ? <Modal /> : ""}
+            <MandateHistory />
             {dataLoading ? (
                 <Skeleton type="custom2" />
             ) : (
@@ -128,10 +130,18 @@ const PaginationTable = () => {
                                                                     .Header ===
                                                                 "Stop Loss"
                                                             ) {
-                                                                stopLoss(
-                                                                    cell.row
-                                                                        .original
-                                                                );
+                                                                if (
+                                                                    window.confirm(
+                                                                        "Are you sure you want to stop this Loan"
+                                                                    )
+                                                                ) {
+                                                                    stopLoss(
+                                                                        cell.row
+                                                                            .original
+                                                                    );
+                                                                } else {
+                                                                    return;
+                                                                }
                                                             } else if (
                                                                 cell.column
                                                                     .Header ===
