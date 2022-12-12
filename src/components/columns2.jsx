@@ -11,7 +11,7 @@ const StyledButton = styled.button`
 export const COLUMNS2 = [
   {
     Header: "Customer Id",
-    accessor: "number",
+    accessor: "data.customerId",
   },
 
   {
@@ -35,13 +35,13 @@ export const COLUMNS2 = [
   },
 
   {
-    Header: "Stop Loss",
+    Header: "Stop Loan",
     accessor: "",
     Cell: ({ row }) => addIcons(<DoNotDisturb />),
   },
 
   {
-    Header: "Hisotry",
+    Header: "History",
     accessor: "",
     Cell: ({ row }) => addIcons(<History />),
   },

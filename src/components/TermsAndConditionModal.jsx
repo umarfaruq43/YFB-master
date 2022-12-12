@@ -9,7 +9,6 @@ const StyledTermsAndConditionModal = styled.div`
   height: 100%;
   bottom: 0;
   left: 0;
-  background: #fff;
   z-index: 1000;
   padding: 20px;
   border-radius: 10px;
@@ -17,6 +16,9 @@ const StyledTermsAndConditionModal = styled.div`
   transition: all 0.3s ease-in-out;
   background-color: #344054;
   color: #ccc;
+
+  @media (max-width: 768px) {
+    padding: 10px;}
 
   .modal-content {
     width: 100%;
@@ -29,6 +31,13 @@ const StyledTermsAndConditionModal = styled.div`
     transition: all 0.3s ease-in-out;
     background-color: #344054;
     color: #ccc;
+    @media (max-width: 425px) {
+    padding: 10px;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+  }
+
 
     .modal-header {
       width: 100%;

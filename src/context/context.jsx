@@ -67,6 +67,7 @@ export default function ContextProvider({ children }) {
                 );
                 // don't add the id to the data object
                 const data = querySnapshot.docs.map((doc, index) => ({
+                    id: doc.id,
                     number: index + 1,
                     ...doc.data(),
                 }));
@@ -92,12 +93,30 @@ export default function ContextProvider({ children }) {
             }));
             const user = data.find(
                 (user) =>
-                    user.email === data.email ||
-                    user.bvn === data.bvn ||
-                    user.bank === data.bank
+                    user.email === data2.email ||
+                    user.BVN === data2.BVN ||
+                    user.telephone === data2.telephone
             );
-            console;
-            await deleteDoc(doc(db, "users", user.id));
+            if (user) {
+                await deleteDoc(doc(db, "users", user.id));
+                // refresh the users and salary users data
+                const querySnapshot = await getDocs(collection(db, "users"));
+                const data = querySnapshot.docs.map((doc, index) => ({
+                    id: doc.id,
+                    number: index + 1,
+                    ...doc.data(),
+                }));
+                setData(data);
+                const querySnapshot2 = await getDocs(
+                    collection(db, "salaryDetails")
+                );
+                const data2 = querySnapshot2.docs.map((doc, index) => ({
+                    id: doc.id,
+                    number: index + 1,
+                    ...doc.data(),
+                }));
+                setSalaryUsers(data2);
+            }
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -203,9 +222,9 @@ export default function ContextProvider({ children }) {
     const getUserInfo = (info) => {
         setCurrentUserInfo(info);
         setLoading(true);
-        var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
+        var apiKey = "WUNUTUZCMTIzNHxZQ1RNRkI=";
         var apiToken =
-            "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
+            "RmhGRUM3WGVHc0RmNUpKSE5DdDVqQkhpWFVwSzA1WjZNZ1BLNnJZRzhsZz0=";
         var apiHash = CryptoJS.SHA512(apiKey + info.telephone + apiToken);
         var authorization =
             "remitaConsumerKey=" + apiKey + ", remitaConsumerToken=" + apiHash;
@@ -213,7 +232,7 @@ export default function ContextProvider({ children }) {
         let rand = Math.floor(Math.random() * 1000);
         const raw = {};
         // Adding the object needed for  headed data
-        raw.authorisationCode = `YCT-MFB-AC-TEST-${info.BVN + rand}`;
+        raw.authorisationCode = `YCT-MFB-AC-${info.BVN + rand}`;
         raw.firstName = info.firstName;
         raw.lastName = info.lastName;
         raw.middleName = info.middleName;
@@ -230,14 +249,14 @@ export default function ContextProvider({ children }) {
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
                 API_KEY: apiKey,
-                MERCHANT_ID: 27768931,
+                MERCHANT_ID: 3089960368,
                 REQUEST_ID: info.telephone,
                 AUTHORIZATION: authorization,
             },
             body: JSON.stringify(raw),
         };
         fetch(
-            "https://remitademo.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/salary/history/provideCustomerDetails",
+            "https://login.remita.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/salary/history/provideCustomerDetails",
             Headers
         )
             .then((res) => res.json())
@@ -262,7 +281,7 @@ export default function ContextProvider({ children }) {
     const [expiresIn, setExpiresIn] = useState(0);
     const [accessToken, setAccessToken] = useState("");
     const URL =
-        "https://remitademo.net/remita/exapp/api/v1/send/api/uaasvc/uaa/token";
+        "https://login.remita.net/remita/exapp/api/v1/send/api/uaasvc/uaa/token";
     const username = "UHSU6ZIMAVXNZHXW";
     const password = "K8JE73OFE508GMOW9VWLX5SLH5QG1PF2";
     const [tokenError, setTokenError] = useState("");
@@ -311,9 +330,9 @@ export default function ContextProvider({ children }) {
         setApproveLoanModal(true);
         console.log("loanClient", loanClient);
         setLoading(true);
-        var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
+        var apiKey = "WUNUTUZCMTIzNHxZQ1RNRkI=";
         var apiToken =
-            "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
+            "RmhGRUM3WGVHc0RmNUpKSE5DdDVqQkhpWFVwSzA1WjZNZ1BLNnJZRzhsZz0=";
         var apiHash = CryptoJS.SHA512(apiKey + loanClient.telephone + apiToken);
         var authorization =
             "remitaConsumerKey=" + apiKey + ", remitaConsumerToken=" + apiHash;
@@ -328,7 +347,7 @@ export default function ContextProvider({ children }) {
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
                 API_KEY: apiKey,
-                MERCHANT_ID: 27768931,
+                MERCHANT_ID: 3089960368,
                 REQUEST_ID: loanClient.telephone,
                 AUTHORIZATION: authorization,
             },
@@ -339,7 +358,7 @@ export default function ContextProvider({ children }) {
         console.log("Stop Loss Raw", raw);
 
         fetch(
-            "https://remitademo.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/stop/loan",
+            "https://login.remita.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/stop/loan",
             Headers
         )
             .then((res) => res.json())
@@ -361,9 +380,9 @@ export default function ContextProvider({ children }) {
         setMdHistoryAction(true);
         console.log("loanClient For Md History", loanClient);
         setLoading(true);
-        var apiKey = "Q1dHREVNTzEyMzR8Q1dHREVNTw==";
+        var apiKey = "WUNUTUZCMTIzNHxZQ1RNRkI=";
         var apiToken =
-            "SGlQekNzMEdMbjhlRUZsUzJCWk5saDB6SU14Zk15djR4WmkxaUpDTll6bGIxRCs4UkVvaGhnPT0=";
+            "RmhGRUM3WGVHc0RmNUpKSE5DdDVqQkhpWFVwSzA1WjZNZ1BLNnJZRzhsZz0=";
         var apiHash = CryptoJS.SHA512(apiKey + loanClient.telephone + apiToken);
         var authorization =
             "remitaConsumerKey=" + apiKey + ", remitaConsumerToken=" + apiHash;
@@ -378,7 +397,7 @@ export default function ContextProvider({ children }) {
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
                 API_KEY: apiKey,
-                MERCHANT_ID: 27768931,
+                MERCHANT_ID: 3089960368,
                 REQUEST_ID: loanClient.telephone,
                 AUTHORIZATION: authorization,
             },
@@ -389,7 +408,7 @@ export default function ContextProvider({ children }) {
         console.log("Mandate History Raw", raw);
 
         fetch(
-            "https://remitademo.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/loan/payment/history",
+            "https://login.remita.net/remita/exapp/api/v1/send/api/loansvc/data/api/v2/payday/loan/payment/history",
             Headers
         )
             .then((res) => res.json())

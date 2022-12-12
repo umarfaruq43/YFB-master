@@ -29,7 +29,7 @@ const Modal = () => {
                     <div>
                         {/* stopLoss result display  */}
                         {stopLossResult && stopLossResult.status === "success"
-                            ? "Loan stop successfully"
+                            ? "Loan successfully stopped"
                             : ""}
                         {stopLossResult && stopLossResult.status !== "success"
                             ? "Unable to stop loan"

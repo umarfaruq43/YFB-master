@@ -24,7 +24,6 @@ const Home = () => {
     loanAmount: "",
     numberOfRepayments: "",
   });
-  const [optionSelect, setOptionSelect] = useState(false);
 
   const inputs = [
     {
@@ -79,7 +78,7 @@ const Home = () => {
       errorMessage: "email address should be valid",
       name: "email",
       required: true,
-      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+      pattern: "[aA-zZ0-9._%+-]+@[aA-zZ0-9.-]+.[aA-zZ]{2,}$",
     },
 
     {
@@ -172,8 +171,12 @@ const Home = () => {
         addDoc(collection(db, "users"), values, { merge: true })
           .then(() => {
             setMessage("User added successfully");
+            // reload the page after 2 seconds
             setSubmitted(true);
             setLoading(false);
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
           })
           .catch((error) => {
             setMessage(error.message);
@@ -222,7 +225,7 @@ const Home = () => {
               <div className="left-content">
                 <h1>Do you need funding for a financial plan?</h1>
                 <p>Let's help you hit your business target with easier plans</p>
-                <button>Read more</button>
+                {/* <button>Read more</button> */}
               </div>
             </div>
             <div className="right">
