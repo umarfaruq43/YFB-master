@@ -193,20 +193,34 @@
     display: block;
 }
 /* ******* Table style *********** */
+.tableBox {
+    /* max-height: 300px !important;
+    overflow-y: auto; */
+}
 
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    position: relative;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
     width: 100%;
-    overflow-y: auto;
+    display: table;
+    overflow: hidden;
+    table-layout: fixed;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+.styled-table > td {
+    display: table-cell;
+}
+table {
+    position: relative !important;
+}
+
 .styled-table thead tr {
     background-color: #34a853;
     color: #ffffff;
+
     text-align: left;
 }
 

@@ -88,10 +88,12 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
 
                                             <div className="subCol pt_14">
                                                 <div className="infoTitle">
-                                                    Bank Code
+                                                    Company Name
                                                 </div>
                                                 <div className="infoResult">
-                                                    {data && data.data.bankCode}
+                                                    {salaryDetails &&
+                                                        salaryDetails.data
+                                                            .companyName}
                                                 </div>
                                             </div>
                                         </div>
@@ -182,79 +184,92 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
 
                                     {/* SALARY TABLE  */}
 
-                                    <div>
-                                        <h3>Salary Details:</h3>
-                                        <table className="styled-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Amount</th>
-                                                    <th>Account No.</th>
-                                                    <th>Bank Code</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {true ? (
+                                    <div className="">
+                                        <h3 style={{ marginBottom: "25px" }}>
+                                            Salary Details:
+                                        </h3>
+                                        <div className="tableBox">
+                                            <table className="styled-table">
+                                                <thead>
                                                     <tr>
-                                                        <td
-                                                            style={{
-                                                                fontWeight:
-                                                                    "800",
-                                                            }}
-                                                        >
-                                                            Salary details not
-                                                            Available
-                                                        </td>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th>Account No.</th>
+                                                        <th>Bank Code</th>
                                                     </tr>
-                                                ) : (
-                                                    <>
-                                                        {data &&
-                                                            salaryDetails.data.salaryPaymentDetails.map(
-                                                                (cell, i) => {
-                                                                    return (
-                                                                        <tr
-                                                                            key={
-                                                                                i
-                                                                            }
-                                                                        >
-                                                                            <td>
-                                                                                {
-                                                                                    cell.paymentDate.split(
-                                                                                        " "
-                                                                                    )[0]
+                                                </thead>
+                                                <tbody>
+                                                    {salaryDetails.data &&
+                                                    salaryDetails.data
+                                                        .salaryPaymentDetails
+                                                        .length == 0 ? (
+                                                        <tr>
+                                                            <td
+                                                                style={{
+                                                                    fontWeight:
+                                                                        "800",
+                                                                }}
+                                                            >
+                                                                Salary details
+                                                                not Available
+                                                            </td>
+                                                        </tr>
+                                                    ) : (
+                                                        <>
+                                                            {salaryDetails.data &&
+                                                                salaryDetails.data.salaryPaymentDetails.map(
+                                                                    (
+                                                                        cell,
+                                                                        i
+                                                                    ) => {
+                                                                        return (
+                                                                            <tr
+                                                                                key={
+                                                                                    i
                                                                                 }
-                                                                            </td>
-                                                                            appro
-                                                                            <td>
-                                                                                {
-                                                                                    cell.amount
-                                                                                }
-                                                                            </td>
-                                                                            <td>
-                                                                                {
-                                                                                    cell.accountNumber
-                                                                                }
-                                                                            </td>
-                                                                            <td>
-                                                                                {
-                                                                                    cell.bankCode
-                                                                                }
-                                                                            </td>
-                                                                        </tr>
-                                                                    );
-                                                                }
-                                                            )}
-                                                    </>
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                                            >
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.paymentDate.split(
+                                                                                            " "
+                                                                                        )[0]
+                                                                                    }
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.amount
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.accountNumber
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.bankCode
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                        </>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
 
                                     {/* *********BUttons ****** */}
 
                                     <div
                                         className="flex"
-                                        style={{ flexDirection: "row" }}
+                                        style={{
+                                            flexDirection: "row",
+                                            marginTop: "20px",
+                                        }}
                                     >
                                         <div className="approve">
                                             <button
@@ -293,98 +308,4 @@ const UserInfoModal = ({ handleShowUserInfo, showUserInfo }) => {
     );
 };
 
-const data = {
-    status: "success",
-    hasData: true,
-    responseId: "1633886042479/1633886042479",
-    responseDate: "10-10-2021 17:14:03+0000",
-    requestDate: "10-10-2021 17:14:02+0000",
-    responseCode: "00",
-    responseMsg: "SUCCESS",
-    data: {
-        customerId: "1366",
-        accountNumber: "5012284010",
-        bankCode: "023",
-        bvn: null,
-        companyName: "National Youth Secrvice Corps",
-        customerName: "Teresa Stoker",
-        category: null,
-        firstPaymentDate: "10-08-2020 00:00:00+0000",
-        salaryCount: "6",
-        salaryPaymentDetails: [
-            {
-                paymentDate: "25-06-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-            {
-                paymentDate: "25-05-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-            {
-                paymentDate: "25-04-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-            {
-                paymentDate: "25-03-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-            {
-                paymentDate: "25-02-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-            {
-                paymentDate: "25-01-2021 13:33:46+0000",
-                amount: "155000",
-                accountNumber: "5012284010",
-                bankCode: "023",
-            },
-        ],
-        loanHistoryDetails: [
-            {
-                loanProvider: "*******",
-                loanAmount: 5000,
-                outstandingAmount: 5650,
-                loanDisbursementDate: "19-08-2021 00:00:00+0000",
-                status: "NEW",
-                repaymentAmount: 5650,
-                repaymentFreq: "MONTHLY",
-            },
-        ],
-        originalCustomerId: "1366",
-    },
-};
 export default UserInfoModal;
-
-const bj = {
-    status: "success",
-    hasData: false,
-    responseId: "09076060579/09076060579",
-    responseDate: "25-11-2022 17:30:26+0000",
-    requestDate: "25-11-2022 17:30:25+0000",
-    responseCode: "00",
-    responseMsg: "SUCCESS",
-    data: {
-        customerId: "1366",
-        accountNumber: "5012284010",
-        bankCode: "023",
-        bvn: null,
-        companyName: "National Youth Secrvice Corps",
-        customerName: "Teresa Stoker",
-        category: null,
-        firstPaymentDate: "10-08-2020 00:00:00+0000",
-        salaryCount: "0",
-        salaryPaymentDetails: [],
-        loanHistoryDetails: [],
-        originalCustomerId: "1366",
-    },
-};
