@@ -122,7 +122,7 @@ const MandateHistory = ({}) => {
                                                 </div>
                                             </div>
 
-                                            <div className="subCol pt_3">
+                                            {/* <div className="subCol pt_3">
                                                 <div className="infoTitle">
                                                     Repayment
                                                 </div>
@@ -131,7 +131,7 @@ const MandateHistory = ({}) => {
                                                         mdHistoryResponse.data
                                                             .repayment}
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <div className="subCol pt_3">
                                                 <div className="infoTitle">
@@ -246,6 +246,78 @@ const MandateHistory = ({}) => {
                                                             .disbursementAccountBank}
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    {/* Repay ment details */}
+                                    <div className="" style={{marginTop:"20px"}} >
+                                        <h3 style={{ marginBottom: "25px" }}>
+                                            Repayment Details:
+                                        </h3>
+                                        <div className="tableBox">
+                                            <table className="styled-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Deduction Date</th>
+                                                        <th>Payment Status</th>
+                                                        <th>
+                                                            Transaction Amount
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {mdHistoryResponse &&
+                                                    mdHistoryResponse.data
+                                                        .repayment === null ? (
+                                                        <tr>
+                                                            <td
+                                                                style={{
+                                                                    fontWeight:
+                                                                        "800",
+                                                                }}
+                                                            >
+                                                                Repayment details
+                                                                not Available
+                                                            </td>
+                                                        </tr>
+                                                    ) : (
+                                                        <>
+                                                            {mdHistoryResponse &&
+                                                                mdHistoryResponse.data.repayment.map(
+                                                                    (
+                                                                        cell,
+                                                                        i
+                                                                    ) => {
+                                                                        return (
+                                                                            <tr
+                                                                                key={
+                                                                                    i
+                                                                                }
+                                                                            >
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.deductiondate.split(" ")[0]
+                                                                                    }
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.paymentstatus
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    {
+                                                                                        cell.transactionamount
+                                                                                    }
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                        </>
+                                                    )}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </>
