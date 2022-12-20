@@ -17,7 +17,7 @@ import MandateHistory from "./MandateHistory";
 
 const PaginationTable = () => {
   const { data: userData, dataLoading, salaryUsers } = dbContext();
-  // console.log(salaryUsers);
+  console.log(salaryUsers);
 
   const columns = useMemo(() => COLUMNS2, []);
   const data = useMemo(() => salaryUsers, [salaryUsers]);
@@ -33,7 +33,7 @@ const PaginationTable = () => {
     usePagination
   );
 
-  const { deleteDocument } = useDelete();
+  const { deleteSalaryUser } = useDelete();
   const { stopLoss, approveLoanModal } = useStopLoss();
   const { mdHistory } = useMdHistory();
 
@@ -104,11 +104,7 @@ const PaginationTable = () => {
                                     "Are you sure you want to delete this user?"
                                   )
                                 ) {
-                                  // deleteSalaryUser(cell.row?.original.id);
-                                  deleteDocument(
-                                    cell.row?.original.id,
-                                    "salaryDetails"
-                                  );
+                                  deleteSalaryUser(cell.row?.original.id);
                                 } else {
                                   return;
                                 }
@@ -124,7 +120,7 @@ const PaginationTable = () => {
                                 }
                               } else if (cell.column.Header === "History") {
                                 mdHistory(cell.row.original);
-                                // console.log("History", cell.row.original);
+                                console.log("History", cell.row.original);
                               }
                             }}
                           >

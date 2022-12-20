@@ -1,6 +1,6 @@
 export const bank_codes = [
   {
-    bankName: "ACCESS BANK PLC",
+    banName: "ACCESS BANK PLC",
     bankCode: "044",
   },
   {

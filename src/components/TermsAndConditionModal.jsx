@@ -56,13 +56,13 @@ const StyledTermsAndConditionModal = styled.div`
         font-family: "Poppins", sans-serif;
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 24px;
         line-height: 29px;
       }
 
       a {
         color: #ccc;
-        font-size: 20px;
+        font-size: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -83,7 +83,7 @@ const StyledTermsAndConditionModal = styled.div`
       p {
         font-style: normal;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 18px;
         line-height: 22px;
       }
 
@@ -98,7 +98,6 @@ const StyledTermsAndConditionModal = styled.div`
         display: flex;
         flex-direction: column;
         gap: 10px;
-        font-size: 12.5px;
 
         li {
           line-height: 25px;
@@ -136,12 +135,6 @@ const TermsAndConditionModal = ({ closeTermsModal }) => {
             <li>
               That this mandaate is only reversible upon the liquidation of the
               loan and confirmed by YCT Microfinance Bank Limited.
-            </li>
-            <li>
-              I consent to obtaining information from relevant third parties as
-              may be necessary, on my employment details, salary payment
-              history, loans and other related data, to make a decision on my
-              loan application.
             </li>
           </ol>
         </div>
