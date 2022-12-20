@@ -136,11 +136,12 @@ const AdminSignUpPage = () => {
   // authorised user
   const admins = [
     "noibiabdulrasaq@gmail.com",
-    "ola@gmail.com",
     "suleimansuleiman606@gmail.com",
     "monsurrajiybs@gmail.com",
-    "ella@gmail.com",
-    "babes2@gmail.com",
+    "hakeemlekspy@gmail.com",
+    "enibecks30@gmail.com",
+    "salamiabibatabiola82@gmail.com",
+    "hassansharafadeen84@gmail.com",
   ];
 
   // Redirect to dashboard if user is authorised

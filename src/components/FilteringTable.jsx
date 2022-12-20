@@ -58,7 +58,7 @@ const StyledTable = styled.table`
 
 const FilteringTable = () => {
   const { data: userData } = dbContext();
-  console.log(userData);
+  // console.log(userData);
 
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => userData, [userData]);
@@ -94,7 +94,7 @@ const FilteringTable = () => {
             return (
               <tr
                 {...row.getRowProps()}
-                onClick={() => console.log(row.original)}
+                // onClick={() => console.log(row.original)}
               >
                 {row.cells.map((cell) => {
                   return (
